@@ -1,0 +1,92 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+     <div class="row">
+      {% for product in products %}
+        <div class="col-lg-4">
+            <img class="thumbnail" src="{{ product.imageURL }}">
+            <div class="box-element product">
+                <h6 onclick="showDescription('{{ product.name }}', '{{ product.description }}')"><strong>{{ product.name }}</strong></h6>
+                <hr>
+                <button data-product={{ product.id }} data-action="add" class="btn btn-outline-dark add-btn update-cart">Add to Cart</button>
+                <span class="rating">
+                    {% with ''|center:product.avg_rating as full_stars %}
+                        {% for _ in full_stars %}
+                            <span class="star filled">★</span>
+                        {% endfor %}
+                        {% with ''|center:5|slice:":-product.avg_rating" as empty_stars %}
+                            {% for _ in empty_stars %}
+                                <span class="star empty">★</span>
+                            {% endfor %}
+                        {% endwith %}
+                    {% endwith %}
+                </span>
+		        <h4 style="display: inline-block; float: right"><strong>₹{{ product.price|floatformat:2 }}</strong></h4>
+            </div>
+        </div>
+      {% endfor product in products %}
+    </div>
+
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+
+    <!-- CSS for Modal -->
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 50%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .rating {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 20px;
+        }
+        .star {
+            color: lightgray; /* Default Grey */
+        }
+        .star.filled {
+            color: gold; /* Filled Stars */
+        }
+    </style>
+
+  <script>
+      function showDescription(name, description) {
+          document.getElementById("modalTitle").innerText = name;
+          document.getElementById("modalDescription").innerText = description;
+          document.getElementById("productModal").style.display = "flex";
+      }
+
+      function closeModal() {
+          document.getElementById("productModal").style.display = "none";
+      }
+  </script>
+{% endblock content %}

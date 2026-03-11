@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIT Canteen</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="slideshow-container">
+        <div class="slideshow">
+            <img src="{% static 'images/canteen_outside7.jpg' %}" class="slide">
+            <img src="{% static 'images/canteen_inside2.jpg' %}" class="slide">
+            <img src="{% static 'images/canteen_inside6.jpg' %}" class="slide">
+            <img src="{% static 'images/Login_1-copy.jpg' %}" class="slide">
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>Welcome to VIT Canteen</h1>
+        <a href="{% url 'login' %}" class="order-btn">Order Now!</a>
+    </div>
+
+    <script>
+        let slideIndex = 0;
+        function showSlides() {
+            let slides = document.querySelectorAll(".slide");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.opacity = "0";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            slides[slideIndex - 1].style.opacity = "1";
+            setTimeout(showSlides, 4000); // Change image every 4 seconds
+        }
+        showSlides();
+    </script>
+</body>
+</html>
