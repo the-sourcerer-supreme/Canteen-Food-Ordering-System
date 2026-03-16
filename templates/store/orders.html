@@ -1,0 +1,37 @@
+{% extends 'store/main.html' %}
+{% block content %}
+  <div class="box-element">
+    <h3 style="margin:0 0 10px 0;">My Orders</h3>
+    {% if not orders %}
+      <p style="color:#6c757d; margin:0;">No orders yet.</p>
+    {% else %}
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th>Status</th>
+              <th>Paid</th>
+              <th>Total</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in orders %}
+              <tr>
+                <td>#{{ order.id }}</td>
+                <td>{{ order.get_status_display }}</td>
+                <td>{% if order.paid_at %}{{ order.paid_at }}{% else %}-{% endif %}</td>
+                <td>₹{{ order.get_cart_total|floatformat:2 }}</td>
+                <td>
+                  <a class="btn btn-sm btn-outline-dark" href="{% url 'order_detail' order.id %}">View</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+  </div>
+{% endblock content %}
+
